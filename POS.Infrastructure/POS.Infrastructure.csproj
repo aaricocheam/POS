@@ -8,12 +8,19 @@
 
   <ItemGroup>
     <Folder Include="Commons\Bases\" />
-    <Folder Include="Extensions\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Persistences\Contexts\Configurations\" />
-    <Folder Include="Persistences\Contexts\" />
     <Folder Include="Persistences\Interfaces\" />
     <Folder Include="Persistences\Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.20" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\POS.Domain\POS.Domain.csproj" />
+    <ProjectReference Include="..\POS.Utilities\POS.Utilities.csproj" />
   </ItemGroup>
 
 </Project>
