@@ -1,4 +1,6 @@
 ﻿using POS.Domain.Entities;
+using POS.Infrastructure.Commons.Bases.Request;
+using POS.Infrastructure.Commons.Bases.Response;
 using POS.Infrastructure.Persistences.Contexts;
 using POS.Infrastructure.Persistences.Interfaces;
 
@@ -6,10 +8,16 @@ namespace POS.Infrastructure.Persistences.Repositories
 {
     public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
     {
-        private readonly POSContext _context;
-        public CategoryRepository(POSContext context)
+        public CategoryRepository(POSContext context) : base(context) { }
+
+        public Task<BaseEntityResponse<Category>> ListCategories(BaseFiltersRequest filters)
         {
-            _context = context;
+            throw new NotImplementedException();
+        }
+
+        Task<BaseEntityResponse<Category>> ICategoryRepository.ListCategories(BaseFiltersRequest filters)
+        {
+            throw new NotImplementedException();
         }
     }
 }
