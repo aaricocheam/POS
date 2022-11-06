@@ -7,14 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commons\Bases\" />
-    <Folder Include="Dtos\Response\" />
-    <Folder Include="Dtos\Request\" />
-    <Folder Include="Extensions\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Mappers\" />
-    <Folder Include="Validators\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
