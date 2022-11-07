@@ -14,7 +14,7 @@ namespace POS.Application.Mappers
 {
     public class CategoryMappingsProfile : Profile
     {
-        protected CategoryMappingsProfile()
+        public CategoryMappingsProfile()
         {
             CreateMap<Category, CategoryResponseDto>()
                 .ForMember(x => x.CategoryId, x => x.MapFrom(y => y.Id))
