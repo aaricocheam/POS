@@ -21,8 +21,8 @@ builder.Services.AddCors(options =>
         builder =>
         {
             builder.WithOrigins("*");
-            builder.AllowAnyMethod();
             builder.AllowAnyHeader();
+            builder.AllowAnyMethod();
         });
 });
 
@@ -36,6 +36,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(Cors);
 
 app.UseAuthorization();
 
