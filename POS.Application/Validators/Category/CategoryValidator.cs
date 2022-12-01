@@ -1,10 +1,5 @@
 ﻿using FluentValidation;
-using POS.Application.Dtos.Request;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using POS.Application.Dtos.Category.Request;
 
 namespace POS.Application.Validators.Category
 {
