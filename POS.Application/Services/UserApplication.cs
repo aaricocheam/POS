@@ -41,6 +41,11 @@ namespace POS.Application.Services
 
                     return response;
                 }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = ReplyMessage.MESSAGE_TOKEN_ERROR;
+                }
             }
             else
             {
