@@ -88,6 +88,11 @@ namespace POS.Application.Services
             var account = _mapper.Map<User>(requestDto);
             account.Password = BCrypt.Net.BCrypt.HashPassword(account.Password);
 
+            if (requestDto.Image is not null)
+            {
+                account.Image = await _unitOfWork.Storage.SaveFile(AzureContainers.USERS, requestDto.Image);
+            }
+
             response.Data = await _unitOfWork.User.RegisterAsync(account);
 
             if (response.Data)
