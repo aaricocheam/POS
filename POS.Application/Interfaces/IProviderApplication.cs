@@ -2,11 +2,13 @@
 using POS.Application.Dtos.Provider.Response;
 using POS.Infrastructure.Commons.Bases.Request;
 using POS.Infrastructure.Commons.Bases.Response;
+using POS.Infrastructure.Persistences.Interfaces;
 
 namespace POS.Application.Interfaces
 {
     public interface IProviderApplication
     {
         Task<BaseResponse<BaseEntityResponse<ProviderResponseDto>>> ListProviders(BaseFiltersRequest filters);
+        Task<BaseResponse<ProviderResponseDto>> ProviderById(int providerId);
     }
 }

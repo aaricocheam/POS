@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using POS.Application.Interfaces;
+using POS.Application.Services;
 using POS.Infrastructure.Commons.Bases.Request;
 
 namespace POS.Api.Controllers
@@ -21,6 +22,13 @@ namespace POS.Api.Controllers
         public async Task<IActionResult> ListProviders([FromBody] BaseFiltersRequest filters)
         {
             var response = await _providerApplication.ListProviders(filters);
+            return Ok(response);
+        }
+
+        [HttpGet("{providerId:int}")]
+        public async Task<ActionResult> CategoryById(int providerId)
+        {
+            var response = await _providerApplication.ProviderById(providerId);
             return Ok(response);
         }
     }
