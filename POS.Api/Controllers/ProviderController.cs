@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using POS.Application.Dtos.Category.Request;
+using POS.Application.Dtos.Provider.Request;
 using POS.Application.Interfaces;
 using POS.Application.Services;
 using POS.Infrastructure.Commons.Bases.Request;
@@ -29,6 +31,13 @@ namespace POS.Api.Controllers
         public async Task<ActionResult> CategoryById(int providerId)
         {
             var response = await _providerApplication.ProviderById(providerId);
+            return Ok(response);
+        }
+
+        [HttpPost("Register")]
+        public async Task<ActionResult> RegisterProvider([FromBody] ProviderRequestDto requestDto)
+        {
+            var response = await _providerApplication.RegisterProvider(requestDto);
             return Ok(response);
         }
     }
