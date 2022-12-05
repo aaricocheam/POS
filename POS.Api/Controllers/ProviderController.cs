@@ -40,5 +40,12 @@ namespace POS.Api.Controllers
             var response = await _providerApplication.RegisterProvider(requestDto);
             return Ok(response);
         }
+
+        [HttpPut("Edit/{providerId:int}")]
+        public async Task<ActionResult> EditCategory(int providerId, [FromBody] ProviderRequestDto requestDto)
+        {
+            var response = await _providerApplication.EditProvider(providerId, requestDto);
+            return Ok(response);
+        }
     }
 }

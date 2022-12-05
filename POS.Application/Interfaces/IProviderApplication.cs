@@ -3,7 +3,6 @@ using POS.Application.Dtos.Provider.Request;
 using POS.Application.Dtos.Provider.Response;
 using POS.Infrastructure.Commons.Bases.Request;
 using POS.Infrastructure.Commons.Bases.Response;
-using POS.Infrastructure.Persistences.Interfaces;
 
 namespace POS.Application.Interfaces
 {
@@ -12,5 +11,6 @@ namespace POS.Application.Interfaces
         Task<BaseResponse<BaseEntityResponse<ProviderResponseDto>>> ListProviders(BaseFiltersRequest filters);
         Task<BaseResponse<ProviderResponseDto>> ProviderById(int providerId);
         Task<BaseResponse<bool>> RegisterProvider(ProviderRequestDto requestDto);
+        Task<BaseResponse<bool>> EditProvider(int providerId, ProviderRequestDto requestDto);
     }
 }
