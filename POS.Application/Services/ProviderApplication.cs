@@ -26,18 +26,27 @@ namespace POS.Application.Services
         {
             var response = new BaseResponse<BaseEntityResponse<ProviderResponseDto>>();
 
-            var providers = await _unitOfWork.Provider.ListProviders(filters);
-
-            if (providers is not null)
+            try
             {
-                response.IsSuccess = true;
-                response.Data = _mapper.Map<BaseEntityResponse<ProviderResponseDto>>(providers);
-                response.Message = ReplyMessage.MESSAGE_QUERY;
+                var providers = await _unitOfWork.Provider.ListProviders(filters);
+
+                if (providers is not null)
+                {
+                    response.IsSuccess = true;
+                    response.Data = _mapper.Map<BaseEntityResponse<ProviderResponseDto>>(providers);
+                    response.Message = ReplyMessage.MESSAGE_QUERY;
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = ReplyMessage.MESSAGE_QUERY_EMPTY;
+                }
             }
-            else
+            catch (Exception ex)
             {
                 response.IsSuccess = false;
-                response.Message = ReplyMessage.MESSAGE_QUERY_EMPTY;
+                response.Message = ReplyMessage.MESSAGE_EXCEPTION;
+                WatchDog.WatchLogger.Log(ex.Message);
             }
 
             return response;
@@ -46,18 +55,28 @@ namespace POS.Application.Services
         public async Task<BaseResponse<ProviderResponseDto>> ProviderById(int providerId)
         {
             var response = new BaseResponse<ProviderResponseDto>();
-            var provider = await _unitOfWork.Provider.GetByIdAsync(providerId);
 
-            if (provider is not null)
+            try
             {
-                response.IsSuccess = true;
-                response.Data = _mapper.Map<ProviderResponseDto>(provider);
-                response.Message = ReplyMessage.MESSAGE_QUERY;
+                var provider = await _unitOfWork.Provider.GetByIdAsync(providerId);
+
+                if (provider is not null)
+                {
+                    response.IsSuccess = true;
+                    response.Data = _mapper.Map<ProviderResponseDto>(provider);
+                    response.Message = ReplyMessage.MESSAGE_QUERY;
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = ReplyMessage.MESSAGE_QUERY_EMPTY;
+                }
             }
-            else
+            catch (Exception ex)
             {
                 response.IsSuccess = false;
-                response.Message = ReplyMessage.MESSAGE_QUERY_EMPTY;
+                response.Message = ReplyMessage.MESSAGE_EXCEPTION;
+                WatchDog.WatchLogger.Log(ex.Message);
             }
 
             return response;
@@ -66,19 +85,29 @@ namespace POS.Application.Services
         public async Task<BaseResponse<bool>> RegisterProvider(ProviderRequestDto requestDto)
         {
             var response = new BaseResponse<bool>();
-            var provider = _mapper.Map<Provider>(requestDto);
 
-            response.Data = await _unitOfWork.Provider.RegisterAsync(provider);
-
-            if (provider is not null)
+            try
             {
-                response.IsSuccess = true;
-                response.Message = ReplyMessage.MESSAGE_SAVE;
+                var provider = _mapper.Map<Provider>(requestDto);
+
+                response.Data = await _unitOfWork.Provider.RegisterAsync(provider);
+
+                if (provider is not null)
+                {
+                    response.IsSuccess = true;
+                    response.Message = ReplyMessage.MESSAGE_SAVE;
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = ReplyMessage.MESSAGE_FAILED;
+                }
             }
-            else
+            catch (Exception ex)
             {
                 response.IsSuccess = false;
-                response.Message = ReplyMessage.MESSAGE_FAILED;
+                response.Message = ReplyMessage.MESSAGE_EXCEPTION;
+                WatchDog.WatchLogger.Log(ex.Message);
             }
 
             return response;
@@ -87,29 +116,39 @@ namespace POS.Application.Services
         public async Task<BaseResponse<bool>> EditProvider(int providerId, ProviderRequestDto requestDto)
         {
             var response = new BaseResponse<bool>();
-            var providerEdit = await ProviderById(providerId);
 
-            if (providerEdit.Data is null)
+            try
+            {
+                var providerEdit = await ProviderById(providerId);
+
+                if (providerEdit.Data is null)
+                {
+                    response.IsSuccess = false;
+                    response.Message = ReplyMessage.MESSAGE_QUERY_EMPTY;
+
+                    return response;
+                }
+
+                var provider = _mapper.Map<Provider>(requestDto);
+                provider.Id = providerId;
+                response.Data = await _unitOfWork.Provider.EditAsync(provider);
+
+                if (response.Data)
+                {
+                    response.IsSuccess = true;
+                    response.Message = ReplyMessage.MESSAGE_UPDATE;
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = ReplyMessage.MESSAGE_QUERY_EMPTY;
+                }
+            }
+            catch (Exception ex)
             {
                 response.IsSuccess = false;
-                response.Message = ReplyMessage.MESSAGE_QUERY_EMPTY;
-
-                return response;
-            }
-
-            var provider = _mapper.Map<Provider>(requestDto);
-            provider.Id = providerId;
-            response.Data = await _unitOfWork.Provider.EditAsync(provider);
-
-            if (response.Data)
-            {
-                response.IsSuccess = true;
-                response.Message = ReplyMessage.MESSAGE_UPDATE;
-            }
-            else
-            {
-                response.IsSuccess = false;
-                response.Message = ReplyMessage.MESSAGE_QUERY_EMPTY;
+                response.Message = ReplyMessage.MESSAGE_EXCEPTION;
+                WatchDog.WatchLogger.Log(ex.Message);
             }
 
             return response;
@@ -118,27 +157,37 @@ namespace POS.Application.Services
         public async Task<BaseResponse<bool>> RemoveProvider(int providerId)
         {
             var response = new BaseResponse<bool>();
-            var provider = await ProviderById(providerId);
 
-            if (provider.Data is null)
+            try
+            {
+                var provider = await ProviderById(providerId);
+
+                if (provider.Data is null)
+                {
+                    response.IsSuccess = false;
+                    response.Message = ReplyMessage.MESSAGE_QUERY_EMPTY;
+
+                    return response;
+                }
+
+                response.Data = await _unitOfWork.Provider.RemoveAsync(providerId);
+
+                if (response.Data)
+                {
+                    response.IsSuccess = true;
+                    response.Message = ReplyMessage.MESSAGE_DELETE;
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.Message = ReplyMessage.MESSAGE_QUERY_EMPTY;
+                }
+            }
+            catch (Exception ex)
             {
                 response.IsSuccess = false;
-                response.Message = ReplyMessage.MESSAGE_QUERY_EMPTY;
-
-                return response;
-            }
-
-            response.Data = await _unitOfWork.Provider.RemoveAsync(providerId);
-
-            if (response.Data)
-            {
-                response.IsSuccess = true;
-                response.Message = ReplyMessage.MESSAGE_DELETE;
-            }
-            else
-            {
-                response.IsSuccess = false;
-                response.Message = ReplyMessage.MESSAGE_QUERY_EMPTY;
+                response.Message = ReplyMessage.MESSAGE_EXCEPTION;
+                WatchDog.WatchLogger.Log(ex.Message);
             }
 
             return response;

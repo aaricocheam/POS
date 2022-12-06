@@ -1,16 +1,17 @@
 using POS.Api.Extensions;
 using POS.Application.Extensions;
 using POS.Infrastructure.Extensions;
+using WatchDog;
 
 var builder = WebApplication.CreateBuilder(args);
-var configuration = builder.Configuration;
+var Configuration = builder.Configuration;
 
 // Add services to the container.
 var Cors = "Cors";
 
-builder.Services.AddInjectionInfrastructure(configuration);
-builder.Services.AddInjectionApplication(configuration);
-builder.Services.AddAuthentication(configuration);
+builder.Services.AddInjectionInfrastructure(Configuration);
+builder.Services.AddInjectionApplication(Configuration);
+builder.Services.AddAuthentication(Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -39,6 +40,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseWatchDogExceptionLogger();
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
@@ -46,6 +49,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseWatchDog(configuration =>
+{
+    configuration.WatchPageUsername = Configuration.GetSection("WatchDog:Username").Value;
+    configuration.WatchPagePassword = Configuration.GetSection("WatchDog:Password").Value;
+});
 
 app.Run();
 

@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using POS.Application.Dtos.Category.Request;
 using POS.Application.Dtos.Provider.Request;
 using POS.Application.Interfaces;
-using POS.Application.Services;
 using POS.Infrastructure.Commons.Bases.Request;
 
 namespace POS.Api.Controllers
@@ -42,14 +40,14 @@ namespace POS.Api.Controllers
         }
 
         [HttpPut("Edit/{providerId:int}")]
-        public async Task<ActionResult> EditCategory(int providerId, [FromBody] ProviderRequestDto requestDto)
+        public async Task<ActionResult> EditProvider(int providerId, [FromBody] ProviderRequestDto requestDto)
         {
             var response = await _providerApplication.EditProvider(providerId, requestDto);
             return Ok(response);
         }
 
         [HttpPut("Remove/{providerId:int}")]
-        public async Task<ActionResult> RemoveCategory(int providerId)
+        public async Task<ActionResult> RemoveProvider(int providerId)
         {
             var response = await _providerApplication.RemoveProvider(providerId);
             return Ok(response);
