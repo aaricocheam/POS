@@ -1,4 +1,4 @@
-﻿using POS.Infrastructure.Commons.Bases;
+﻿using POS.Infrastructure.Commons.Bases.request;
 
 namespace POS.Infrastructure.Helpers
 {
