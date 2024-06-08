@@ -1,0 +1,18 @@
+﻿using POS.Application.Commons.Bases;
+using POS.Application.Dtos.request;
+using POS.Application.Dtos.response;
+using POS.Infrastructure.Commons.Bases.request;
+using POS.Infrastructure.Commons.Bases.response;
+
+namespace POS.Application.Interfaces
+{
+    public interface ICategoryApplication
+    {
+        Task<BaseResponse<BaseEntityResponse<CategoryResponseDto>>> ListCategories(BaseFiltersRequest filters);
+        Task<BaseResponse<IEnumerable<CategorySelectResponseDto>>> ListSelectCategories();
+        Task<BaseResponse<CategoryResponseDto>> CategoryById(int categoryId);
+        Task<BaseResponse<bool>> RegisterCategory(CategoryRequestDto requestDto);
+        Task<BaseResponse<bool>> EditCategory(int categoryId, CategoryRequestDto requestDto);
+        Task<BaseResponse<bool>> RemoveCategory(int categoryId);
+    }
+}
