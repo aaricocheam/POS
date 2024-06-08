@@ -7,6 +7,6 @@
         public string? Description { get; set; }
         public DateTime AuditCreateDate { get; set; }
         public int State { get; set; }
-        public int StateCategory { get; set; }
+        public string? StateCategory { get; set; }
     }
 }

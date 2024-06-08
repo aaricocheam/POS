@@ -1,6 +1,6 @@
 ﻿namespace POS.Application.Dtos.response
 {
-    public interface CategorySelectResponseDto
+    public class CategorySelectResponseDto
     {
         public int CategoryId { get; set; }
         public string? Name { get; set; }
