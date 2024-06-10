@@ -1,11 +1,6 @@
 ﻿using POS.Domain.Entities;
 using POS.Infrastructure.Commons.Bases.request;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POS.Infrastructure.Persistences.Interfaces
 {
