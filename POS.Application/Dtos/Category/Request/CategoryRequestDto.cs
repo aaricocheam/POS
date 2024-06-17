@@ -1,4 +1,4 @@
-﻿namespace POS.Application.Dtos.request
+﻿namespace POS.Application.Dtos.Category.Request
 {
     public class CategoryRequestDto
     {

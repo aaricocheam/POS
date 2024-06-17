@@ -1,10 +1,5 @@
 ﻿using POS.Infrastructure.Persistences.Contexts;
 using POS.Infrastructure.Persistences.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POS.Infrastructure.Persistences.Repositories
 {
@@ -12,11 +7,13 @@ namespace POS.Infrastructure.Persistences.Repositories
     {
         private readonly POSContext _context;
         public ICategoryRepository Category { get; private set; }
+        public IUserRepository User { get; private set; }
 
         public UnitOfWork(POSContext context)
         {
             _context = context;
             Category = new CategoryRepository(context);
+            User = new UserRepository(context);
         }
 
         public void Dispose()
